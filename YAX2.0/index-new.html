@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>YA´x — Plataforma Mayorista Agrícola B2B Guatemala</title>
+    <link rel="icon" type="image/png" href="img/logo-yax.png">
+    <link rel="apple-touch-icon" href="img/logo-yax.png">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body>
+    <div id="page-bg"></div>
+    
+    <header>
+        <div class="header-inner">
+            <div class="logo-group" onclick="showView('catalog')">
+                <div class="logo-img-wrap">
+                    <div class="logo-brand">
+                        <img src="img/logo-yax.png" alt="YA´x" class="logo-img">
+                    </div>
+                    <div class="logo-divider"></div>
+                    <div class="logo-wordmark">
+                        <span>YA´x</span>
+                        <span>MAYORISTA</span>
+                    </div>
+                </div>
+            </div>
+            
+            <nav id="mainNav">
+                <button id="nav-catalog" onclick="showView('catalog')"><i class="fas fa-leaf"></i> Catálogo</button>
+                <button id="nav-suppliers" onclick="showView('suppliers')"><i class="fas fa-store"></i> Proveedores</button>
+                <button id="nav-about"><i class="fas fa-info-circle"></i> Acerca de</button>
+            </nav>
+            
+            <div class="header-right">
+                <button class="btn-cart" onclick="toggleCart()" title="Carrito de compra">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge hidden" id="cartBadge">0</span>
+                </button>
+                <div class="header-auth-desktop" id="headerAuthDesktop"></div>
+                <div class="header-socials">
+                    <a class="soc-btn" href="https://www.facebook.com/YAXMarketplace" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a class="soc-btn" href="https://www.instagram.com/YAXMarketplace" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuIcon" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="mobile-nav-overlay" id="mobileNavOverlay" onclick="onOverlayTap(event)">
+        <nav id="mobileSidebar" style="width:280px;background:white;height:100%;overflow-y:auto;padding:20px;display:flex;flex-direction:column;">
+            <button onclick="closeMobileMenu();showView('catalog');" style="text-align:left;background:none;border:none;cursor:pointer;font-size:15px;font-weight:700;color:var(--warm-800);margin-bottom:12px;"><i class="fas fa-leaf"></i> Catálogo</button>
+            <button onclick="closeMobileMenu();showView('suppliers');" style="text-align:left;background:none;border:none;cursor:pointer;font-size:15px;font-weight:700;color:var(--warm-800);margin-bottom:12px;"><i class="fas fa-store"></i> Proveedores</button>
+            <button onclick="closeMobileMenu();showView('about');" style="text-align:left;background:none;border:none;cursor:pointer;font-size:15px;font-weight:700;color:var(--warm-800);margin-bottom:12px;"><i class="fas fa-info-circle"></i> Acerca de</button>
+            <div class="nav-menu-footer">
+                <button class="nav-cart-btn" onclick="openCartFromMenu()">
+                    <i class="fas fa-shopping-cart"></i> Ver carrito
+                    <span class="cart-badge hidden" id="navCartBadge">0</span>
+                </button>
+                <div class="nav-auth" id="mobileNavAuth"></div>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        <!-- CATÁLOGO -->
+        <section class="view-section hidden" id="view-catalog">
+            <div class="hero-banner">
+                <div class="hero-text">
+                    <h2>Compra Directo al Productor</h2>
+                    <p>Acceso a productos frescos de <span id="heroVendorCount">25</span> proveedores certificados en Guatemala, con precios competitivos y entrega rápida.</p>
+                    <div class="hero-badges">
+                        <div class="hero-badge"><i class="fas fa-check-circle"></i> Precio Justo</div>
+                        <div class="hero-badge"><i class="fas fa-lightning"></i> Entrega Rápida</div>
+                        <div class="hero-badge"><i class="fas fa-shield-alt"></i> 100% Certificado</div>
+                    </div>
+                </div>
+                <div class="hero-stat">
+                    <div class="num" id="heroVendorCount">25</div>
+                    <div class="lbl">PROVEEDORES</div>
+                </div>
+            </div>
+
+            <div class="maga-date-bar">
+                <span class="maga-logo-sm">MAGA</span>
+                <span>Precios de referencia diarios de mercados mayoristas de Guatemala</span>
+            </div>
+
+            <div class="filter-bar">
+                <div class="search-wrap">
+                    <i class="fas fa-search"></i>
+                    <form class="catalog-search-form" onsubmit="return false;">
+                        <input type="text" id="searchInput" placeholder="Buscar productos..." oninput="handleSearch(this.value)">
+                    </form>
+                </div>
+            </div>
+
+            <div class="category-filters">
+                <button class="cat-btn active" onclick="filterCat(this, 'all')">Todos</button>
+                <button class="cat-btn" onclick="filterCat(this, 'frutas')">Frutas</button>
+                <button class="cat-btn" onclick="filterCat(this, 'verduras')">Verduras</button>
+                <button class="cat-btn" onclick="filterCat(this, 'granos')">Granos</button>
+                <button class="cat-btn" onclick="filterCat(this, 'tuberculos')">Tubérculos</button>
+                <button class="cat-btn" onclick="filterCat(this, 'proteinas')">Proteínas</button>
+                <button class="cat-btn" onclick="filterCat(this, 'mariscos')">Mariscos</button>
+            </div>
+
+            <div class="product-table" id="mainProductTable">
+                <div class="table-header">
+                    <div></div>
+                    <div>PRODUCTO</div>
+                    <div>PRESENTACIÓN</div>
+                    <div>PRECIOS</div>
+                    <div></div>
+                </div>
+                <div id="productList"></div>
+            </div>
+
+            <div id="searchResultsSection" class="hidden" style="margin-top:32px;"></div>
+        </section>
+
+        <!-- PROVEEDORES -->
+        <section class="view-section hidden" id="view-suppliers">
+            <div class="hero-banner">
+                <div class="hero-text">
+                    <h2>Directorio de Proveedores</h2>
+                    <p id="suppliersCountText">25 proveedores certificados activos · Certificación YA´x Premium y Certificación MAGA</p>
+                    <div class="hero-badges">
+                        <div class="hero-badge"><i class="fas fa-award"></i> Certificados</div>
+                        <div class="hero-badge"><i class="fas fa-leaf"></i> Productos Frescos</div>
+                        <div class="hero-badge"><i class="fas fa-handshake"></i> B2B Confiable</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-bar">
+                <div class="search-wrap">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="supplierSearchInput" placeholder="Buscar proveedor..." oninput="filterSuppliers(this.value)">
+                </div>
+            </div>
+
+            <div class="category-filters">
+                <button class="cat-btn active" onclick="filterSuppliersCert(this, 'all')">Todos</button>
+                <button class="cat-btn" onclick="filterSuppliersCert(this, 'yax')">⭐ YA´x Premium</button>
+                <button class="cat-btn" onclick="filterSuppliersCert(this, 'maga')">🏛️ Certificación MAGA</button>
+            </div>
+
+            <div id="suppliersList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:24px;"></div>
+        </section>
+
+        <!-- MODAL PROVEEDOR -->
+        <div id="supplierModal" class="hidden" onclick="closeModalOutside(event)" style="position:fixed;inset:0;background:rgba(5,40,73,.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;">
+            <div style="background:white;border-radius:18px;box-shadow:var(--shadow-lg);width:100%;max-width:600px;max-height:80vh;overflow-y:auto;padding:24px;" onclick="event.stopPropagation();">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+                    <h3 id="modalSupplierTitle" style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--warm-800);margin:0;"></h3>
+                    <button onclick="closeSupplierModal()" style="background:none;border:none;cursor:pointer;font-size:20px;color:var(--warm-400);">×</button>
+                </div>
+                <div id="modalSupplierBody"></div>
+            </div>
+        </div>
+
+        <!-- CARRITO -->
+        <section class="view-section hidden" id="view-cart">
+            <h1 style="font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--warm-800);margin-bottom:20px;">Carrito de Compra</h1>
+            <div id="cartContent"></div>
+        </section>
+
+        <!-- AUTENTICACIÓN -->
+        <section class="view-section hidden" id="view-login">
+            <h1 style="font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--warm-800);margin-bottom:20px;">Inicia Sesión</h1>
+            <form onsubmit="handleLogin(event)" style="max-width:400px;margin:0 auto;">
+                <input type="email" id="loginEmail" placeholder="Correo electrónico" required style="width:100%;padding:12px;margin-bottom:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                <input type="password" id="loginPass" placeholder="Contraseña" required style="width:100%;padding:12px;margin-bottom:20px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                <button type="submit" class="btn btn-primary" style="width:100%;"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</button>
+            </form>
+        </section>
+
+        <section class="view-section hidden" id="view-register">
+            <h1 style="font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--warm-800);margin-bottom:20px;">Registrarse</h1>
+            <form onsubmit="handleRegister(event)" style="max-width:500px;margin:0 auto;">
+                <input type="text" id="regNames" placeholder="Nombres" required style="width:100%;padding:12px;margin-bottom:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                <input type="email" id="regEmail" placeholder="Correo electrónico" required style="width:100%;padding:12px;margin-bottom:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                <input type="password" id="regPass" placeholder="Contraseña" required style="width:100%;padding:12px;margin-bottom:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                <select id="regRole" style="width:100%;padding:12px;margin-bottom:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                    <option value="buyer">Comprador (Distribuidor/Restaurante)</option>
+                    <option value="seller">Vendedor (Productor Agrícola)</option>
+                </select>
+                <button type="submit" class="btn btn-green" style="width:100%;"><i class="fas fa-user-plus"></i> Crear Cuenta</button>
+            </form>
+        </section>
+
+        <!-- PANEL DE VENDEDOR -->
+        <section class="view-section hidden" id="view-seller-panel">
+            <h1 style="font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--warm-800);margin-bottom:10px;">Panel de Vendedor</h1>
+            <p id="sellerPanelWelcome" style="color:var(--warm-400);margin-bottom:20px;"></p>
+            
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;">
+                <div>
+                    <h2 id="sellerFormTitle" style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--warm-800);margin-bottom:16px;">Publicar nuevo producto</h2>
+                    <form onsubmit="event.preventDefault();saveSellerProduct();" style="display:flex;flex-direction:column;gap:12px;">
+                        <input type="hidden" id="spEditId">
+                        <input type="text" id="spName" placeholder="Nombre del producto" required style="padding:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                        <select id="spCategory" style="padding:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                            <option value="frutas">Frutas</option>
+                            <option value="verduras">Verduras</option>
+                            <option value="granos">Granos</option>
+                            <option value="tuberculos">Tubérculos</option>
+                            <option value="proteinas">Proteínas</option>
+                            <option value="mariscos">Mariscos</option>
+                        </select>
+                        <input type="text" id="spUnit" placeholder="Unidad (ej: Quintal, Caja)" required style="padding:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                        <input type="number" id="spQuantity" placeholder="Cantidad disponible" required style="padding:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                        <input type="number" id="spPrice" placeholder="Precio (Q)" required step="0.01" style="padding:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                        <input type="text" id="spDescription" placeholder="Descripción (opcional)" style="padding:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                        <select id="spDepartment" required style="padding:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                            <option value="">Selecciona departamento</option>
+                            <option value="Guatemala">Guatemala</option>
+                            <option value="Sacatepéquez">Sacatepéquez</option>
+                            <option value="Chimaltenango">Chimaltenango</option>
+                            <option value="Escuintla">Escuintla</option>
+                            <option value="Guatemala">Guatemala</option>
+                        </select>
+                        <input type="text" id="spMunicipality" placeholder="Municipio (opcional)" style="padding:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                        <input type="text" id="spLocationDetail" placeholder="Detalles de ubicación (opcional)" style="padding:12px;border:2px solid var(--warm-100);border-radius:10px;font-size:14px;">
+                        <div style="display:flex;gap:12px;">
+                            <button type="submit" id="spSaveBtn" class="btn btn-primary" style="flex:1;"><i class="fas fa-plus-circle"></i> Publicar producto</button>
+                            <button type="button" id="spCancelBtn" class="btn btn-outline hidden" onclick="cancelEditSellerProduct()" style="flex:1;">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div>
+                    <h2 style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--warm-800);margin-bottom:16px;">Mis productos <span style="font-size:14px;color:var(--warm-400);" id="sellerProductsCount">(0)</span></h2>
+                    <div id="sellerProductsList" style="display:flex;flex-direction:column;gap:12px;"></div>
+                </div>
+            </div>
+
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--warm-800);margin-bottom:16px;">Catálogo de Ofertas de Vendedores</h2>
+            <div id="sellerOffersCatalog" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;"></div>
+        </section>
+    </main>
+
+    <footer style="background:var(--warm-50);border-top:1px solid var(--warm-100);padding:32px 28px;margin-top:auto;text-align:center;color:var(--warm-400);font-size:12px;">
+        <p>© 2024 YA´x — Plataforma Mayorista Agrícola B2B de Guatemala. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPTS — ORDEN CRÍTICO: Configuración → Utilidades → API → Datos → Lógica de dominio → UI → Inicialización -->
+    <script src="src/js/config.js"></script>
+    <script src="src/js/utils.js"></script>
+    <script src="src/js/api.js"></script>
+    <script src="src/js/constants.js"></script>
+    <script src="src/js/cart.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/ui.js"></script>
+    <script src="src/js/suppliers.js"></script>
+    <script src="src/js/seller.js"></script>
+    <script src="src/js/main.js"></script>
+</body>
+</html>

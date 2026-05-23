@@ -1,0 +1,20 @@
+CHECKLIST — Subir YA´x a tu hosting
+================================
+
+1. Comprime o sube por FTP esta carpeta completa (YAX2.0 interna).
+
+2. Archivos obligatorios:
+   - index.html
+   - server.js
+   - package.json
+   - img/ (logos)
+   - data/ (carpeta vacía, permiso de escritura)
+
+3. En el hosting debe existir Node.js version 22 o superior.
+
+4. Comando de inicio: node server.js
+   (o Start script en package.json: npm start)
+
+5. Enlaza tu dominio y activa SSL (HTTPS).
+
+6. Guía detallada: abre DESPLIEGUE.md

@@ -1,0 +1,14 @@
+{
+  "name": "yax-plataforma",
+  "version": "2.0.0",
+  "description": "YA´x — Plataforma Mayorista Agrícola B2B Guatemala",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "private": true
+}
