@@ -84,7 +84,7 @@ input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
 
 /* HEADER */
 header {
-    background: rgba(255,255,255,.95);
+    background: rgba(81, 161, 35, 0.95);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--warm-100);
     position: sticky; top: 0; z-index: 100;
